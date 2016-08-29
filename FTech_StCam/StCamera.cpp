@@ -14,6 +14,8 @@ CStCamera::CStCamera(void)
 	m_nWidth	= 0;
 	m_nHeight	= 0;
 	m_nBpp		= 0;
+	m_strIP		= L"";
+	m_strMAC	= L"";
 
 	m_hGrabDone = CreateEvent(NULL,TRUE,FALSE,NULL);
 	m_hThTerminate = CreateEvent(NULL,TRUE,FALSE,NULL);
@@ -53,13 +55,13 @@ bool CStCamera::OnConnect()
 	if ( !DeviceFinderWnd.ShowModal().IsOK() )
 		return false;
 	
-	PvDeviceInfo* DeviceInfo = DeviceFinderWnd.GetSelected();
-	if( DeviceInfo == NULL )
+	PvDeviceInfo* ppvDeviceInfo = DeviceFinderWnd.GetSelected();
+	if( ppvDeviceInfo == NULL )
 		return false;
 	
 	SetCursor(LoadCursor(NULL, IDC_WAIT));
 	
-	StResult = m_pvDevice.Connect( DeviceInfo, PvAccessControl );
+	StResult = m_pvDevice.Connect( ppvDeviceInfo, PvAccessControl );
 	if ( !StResult.IsOK() )
 	{
 		m_strErrorMsg = (CString)StResult.GetCodeString().GetUnicode();
@@ -78,7 +80,7 @@ bool CStCamera::OnConnect()
 
 	for ( ;; )
 	{
-		StResult = m_pvStream.Open( DeviceInfo->GetIPAddress() );
+		StResult = m_pvStream.Open( ppvDeviceInfo->GetIPAddress() );
 		if ( StResult.IsOK() )
 			break;
 		
@@ -96,6 +98,8 @@ bool CStCamera::OnConnect()
 	ASSERT( m_ppvAcqManager == NULL );
 	m_ppvAcqManager = new PvAcquisitionStateManager( &m_pvDevice, &m_pvStream );
 
+	m_strIP = (CString)ppvDeviceInfo->GetIPAddress().GetUnicode();
+	m_strMAC = (CString)ppvDeviceInfo->GetMACAddress().GetUnicode();
 
 	PvInt64 Value=0;
 	m_pvDevice.GetGenParameters()->GetInteger( "Width" )->GetValue(Value);
@@ -204,6 +208,9 @@ bool CStCamera::OnConnect(CString strUserID)
 	ASSERT( m_ppvAcqManager == NULL );
 	m_ppvAcqManager = new PvAcquisitionStateManager( &m_pvDevice, &m_pvStream );
 	
+	m_strIP = (CString)ppvDeviceInfo->GetIPAddress().GetUnicode();
+	m_strMAC = (CString)ppvDeviceInfo->GetMACAddress().GetUnicode();
+
 	PvInt64 Value=0;
 	m_pvDevice.GetGenParameters()->GetInteger( "Width" )->GetValue(Value);
 	m_nWidth = (int)Value;
@@ -314,6 +321,9 @@ bool CStCamera::OnConnect(int nAddr1, int nAddr2, int nAddr3, int nAddr4)
 
 	ASSERT( m_ppvAcqManager == NULL );
 	m_ppvAcqManager = new PvAcquisitionStateManager( &m_pvDevice, &m_pvStream );
+
+	m_strIP = (CString)ppvDeviceInfo->GetIPAddress().GetUnicode();
+	m_strMAC = (CString)ppvDeviceInfo->GetMACAddress().GetUnicode();
 
 	PvInt64 Value=0;
 	m_pvDevice.GetGenParameters()->GetInteger( "Width" )->GetValue(Value);
@@ -601,40 +611,379 @@ bool CStCamera::OnSaveImage(CString strPath)
 	return true;
 }
 
-bool CStCamera::GetDeviceUserID(CString &strCamID)
+bool CStCamera::GetDeviceUserID(CString &strValue)
 {
 	if (!m_pvDevice.IsConnected()) return false;
 
 	PvResult StResult = PvResult::Code::NOT_CONNECTED;
 
-	PvString Name;
-	StResult = m_pvDevice.GetGenParameters()->GetString("DeviceUserID", Name);
+	PvString value;
+	StResult = m_pvDevice.GetGenParameters()->GetString("DeviceUserID", value);
 	if (!StResult.IsOK())
 	{
 		m_strErrorMsg = (CString)StResult.GetCodeString().GetUnicode();
 		return false;
 	}
 
-	strCamID = Name.GetUnicode();
+	strValue = value.GetUnicode();
 
 	return true;
 }
 
-bool CStCamera::GetDeviceModelName(CString &strCamID)
+bool CStCamera::GetDeviceModelName(CString &strValue)
 {
 	if (!m_pvDevice.IsConnected()) return false;
 
 	PvResult StResult = PvResult::Code::NOT_CONNECTED;
 
-	PvString Name;
-	StResult = m_pvDevice.GetGenParameters()->GetString("DeviceModelName", Name);
+	PvString value;
+	StResult = m_pvDevice.GetGenParameters()->GetString("DeviceModelName", value);
 	if (!StResult.IsOK())
 	{
 		m_strErrorMsg = (CString)StResult.GetCodeString().GetUnicode();
 		return false;
 	}
 
-	strCamID = Name.GetUnicode();
+	strValue = value.GetUnicode();
+
+	return true;
+}
+
+bool CStCamera::GetSerialNumber(CString &strValue)
+{
+	if (!m_pvDevice.IsConnected()) return false;
+
+	PvResult StResult = PvResult::Code::NOT_CONNECTED;
+
+	PvString value;
+	StResult = m_pvDevice.GetGenParameters()->GetString("DeviceID", value);
+	if (!StResult.IsOK())
+	{
+		m_strErrorMsg = (CString)StResult.GetCodeString().GetUnicode();
+		return false;
+	}
+
+	strValue = value.GetUnicode();
+
+	return true;
+}
+
+bool CStCamera::GetOffsetX(int &nValue)
+{
+	if (!m_pvDevice.IsConnected()) return false;
+
+	PvResult StResult = PvResult::Code::NOT_CONNECTED;
+
+	PvInt64 value;
+	StResult = m_pvDevice.GetGenParameters()->GetIntegerValue("OffsetX", value);
+	if (!StResult.IsOK())
+	{
+		m_strErrorMsg = (CString)StResult.GetCodeString().GetUnicode();
+		return false;
+	}
+
+	nValue = (int)value;
+
+	return true;
+}
+
+bool CStCamera::GetOffsetY(int &nValue)
+{
+	if (!m_pvDevice.IsConnected()) return false;
+
+	PvResult StResult = PvResult::Code::NOT_CONNECTED;
+
+	PvInt64 value;
+	StResult = m_pvDevice.GetGenParameters()->GetIntegerValue("OffsetY", value);
+	if (!StResult.IsOK())
+	{
+		m_strErrorMsg = (CString)StResult.GetCodeString().GetUnicode();
+		return false;
+	}
+
+	nValue = (int)value;
+
+	return true;
+}
+
+bool CStCamera::GetAcquisitionMode(CString &strValue)
+{
+	if (!m_pvDevice.IsConnected()) return false;
+
+	PvResult StResult = PvResult::Code::NOT_CONNECTED;
+
+	PvString value;
+	StResult = m_pvDevice.GetGenParameters()->GetEnumValue("AcquisitionMode", value);
+	if (!StResult.IsOK())
+	{
+		m_strErrorMsg = (CString)StResult.GetCodeString().GetUnicode();
+		return false;
+	}
+
+	strValue = value.GetUnicode();
+
+	return true;
+}
+
+bool CStCamera::GetAcquisitionFrameRate(double &dValue)
+{
+	if (!m_pvDevice.IsConnected()) return false;
+
+	PvResult StResult = PvResult::Code::NOT_CONNECTED;
+
+	double value;
+	StResult = m_pvDevice.GetGenParameters()->GetFloatValue("AcquisitionFrameRate", value);
+	if (!StResult.IsOK())
+	{
+		m_strErrorMsg = (CString)StResult.GetCodeString().GetUnicode();
+		return false;
+	}
+
+	dValue = value;
+
+	return true;
+}
+
+bool CStCamera::GetTriggerMode(CString &strValue)
+{
+	if (!m_pvDevice.IsConnected()) return false;
+
+	PvResult StResult = PvResult::Code::NOT_CONNECTED;
+
+	PvString value;
+	StResult = m_pvDevice.GetGenParameters()->GetEnumValue("TriggerMode", value);
+	if (!StResult.IsOK())
+	{
+		m_strErrorMsg = (CString)StResult.GetCodeString().GetUnicode();
+		return false;
+	}
+
+	strValue = value.GetUnicode();
+
+	return true;
+}
+
+bool CStCamera::GetTriggerSource(CString &strValue)
+{
+	if (!m_pvDevice.IsConnected()) return false;
+
+	PvResult StResult = PvResult::Code::NOT_CONNECTED;
+
+	PvString value;
+	StResult = m_pvDevice.GetGenParameters()->GetEnumValue("TriggerSource", value);
+	if (!StResult.IsOK())
+	{
+		m_strErrorMsg = (CString)StResult.GetCodeString().GetUnicode();
+		return false;
+	}
+
+	strValue = value.GetUnicode();
+
+	return true;
+}
+
+bool CStCamera::GetTriggerOverlap(CString &strValue)
+{
+	if (!m_pvDevice.IsConnected()) return false;
+
+	PvResult StResult = PvResult::Code::NOT_CONNECTED;
+
+	PvString value;
+	StResult = m_pvDevice.GetGenParameters()->GetEnumValue("TriggerOverlap", value);
+	if (!StResult.IsOK())
+	{
+		m_strErrorMsg = (CString)StResult.GetCodeString().GetUnicode();
+		return false;
+	}
+
+	strValue = value.GetUnicode();
+
+	return true;
+}
+
+bool CStCamera::GetExposureMode(CString &strValue)
+{
+	if (!m_pvDevice.IsConnected()) return false;
+
+	PvResult StResult = PvResult::Code::NOT_CONNECTED;
+
+	PvString value;
+	StResult = m_pvDevice.GetGenParameters()->GetEnumValue("ExposureMode", value);
+	if (!StResult.IsOK())
+	{
+		m_strErrorMsg = (CString)StResult.GetCodeString().GetUnicode();
+		return false;
+	}
+
+	strValue = value.GetUnicode();
+
+	return true;
+}
+
+bool CStCamera::GetExposureTime(double &dValue)
+{
+	if (!m_pvDevice.IsConnected()) return false;
+
+	PvResult StResult = PvResult::Code::NOT_CONNECTED;
+
+	double value;
+	StResult = m_pvDevice.GetGenParameters()->GetFloatValue("ExposureTime", value);
+	if (!StResult.IsOK())
+	{
+		m_strErrorMsg = (CString)StResult.GetCodeString().GetUnicode();
+		return false;
+	}
+
+	dValue = value;
+
+	return true;
+}
+
+bool CStCamera::SetDeviceUserID(CString strValue)
+{
+	if (!m_pvDevice.IsConnected()) return false;
+
+	PvResult StResult = PvResult::Code::NOT_CONNECTED;
+
+	PvString value(strValue);
+	StResult = m_pvDevice.GetGenParameters()->SetString("DeviceUserID", value);
+	if (!StResult.IsOK())
+	{
+		m_strErrorMsg = (CString)StResult.GetCodeString().GetUnicode();
+		return false;
+	}
+
+	return true;
+}
+
+bool CStCamera::SetOffsetX(int nValue)
+{
+	if (!m_pvDevice.IsConnected()) return false;
+
+	PvResult StResult = PvResult::Code::NOT_CONNECTED;
+
+	StResult = m_pvDevice.GetGenParameters()->SetIntegerValue("OffsetX", nValue);
+	if (!StResult.IsOK())
+	{
+		m_strErrorMsg = (CString)StResult.GetCodeString().GetUnicode();
+		return false;
+	}
+
+	return true;
+}
+
+bool CStCamera::SetOffsetY(int nValue)
+{
+	if (!m_pvDevice.IsConnected()) return false;
+
+	PvResult StResult = PvResult::Code::NOT_CONNECTED;
+
+	StResult = m_pvDevice.GetGenParameters()->SetIntegerValue("OffsetY", nValue);
+	if (!StResult.IsOK())
+	{
+		m_strErrorMsg = (CString)StResult.GetCodeString().GetUnicode();
+		return false;
+	}
+
+	return true;
+}
+
+bool CStCamera::SetAcquisitionFrameRate(double dValue)
+{
+	if (!m_pvDevice.IsConnected()) return false;
+
+	PvResult StResult = PvResult::Code::NOT_CONNECTED;
+
+	StResult = m_pvDevice.GetGenParameters()->SetFloatValue("AcquisitionFrameRate", dValue);
+	if (!StResult.IsOK())
+	{
+		m_strErrorMsg = (CString)StResult.GetCodeString().GetUnicode();
+		return false;
+	}
+
+	return true;
+}
+
+bool CStCamera::SetTriggerMode(CString strValue)
+{
+	if (!m_pvDevice.IsConnected()) return false;
+
+	PvResult StResult = PvResult::Code::NOT_CONNECTED;
+
+	PvString value(strValue);
+	StResult = m_pvDevice.GetGenParameters()->SetEnumValue("TriggerMode", value);
+	if (!StResult.IsOK())
+	{
+		m_strErrorMsg = (CString)StResult.GetCodeString().GetUnicode();
+		return false;
+	}
+
+	return true;
+}
+
+bool CStCamera::SetTriggerSource(CString strValue)
+{
+	if (!m_pvDevice.IsConnected()) return false;
+
+	PvResult StResult = PvResult::Code::NOT_CONNECTED;
+
+	PvString value(strValue);
+	StResult = m_pvDevice.GetGenParameters()->SetEnumValue("TriggerSource", value);
+	if (!StResult.IsOK())
+	{
+		m_strErrorMsg = (CString)StResult.GetCodeString().GetUnicode();
+		return false;
+	}
+
+	return true;
+}
+
+bool CStCamera::SetTriggerOverlap(CString strValue)
+{
+	if (!m_pvDevice.IsConnected()) return false;
+
+	PvResult StResult = PvResult::Code::NOT_CONNECTED;
+
+	PvString value(strValue);
+	StResult = m_pvDevice.GetGenParameters()->SetEnumValue("TriggerOverlap", value);
+	if (!StResult.IsOK())
+	{
+		m_strErrorMsg = (CString)StResult.GetCodeString().GetUnicode();
+		return false;
+	}
+
+	return true;
+}
+
+bool CStCamera::SetExposureMode(CString strValue)
+{
+	if (!m_pvDevice.IsConnected()) return false;
+
+	PvResult StResult = PvResult::Code::NOT_CONNECTED;
+
+	PvString value(strValue);
+	StResult = m_pvDevice.GetGenParameters()->SetEnumValue("ExposureMode", value);
+	if (!StResult.IsOK())
+	{
+		m_strErrorMsg = (CString)StResult.GetCodeString().GetUnicode();
+		return false;
+	}
+
+	return true;
+}
+
+bool CStCamera::SetExposureTime(double dValue)
+{
+	if (!m_pvDevice.IsConnected()) return false;
+
+	PvResult StResult = PvResult::Code::NOT_CONNECTED;
+
+	StResult = m_pvDevice.GetGenParameters()->SetFloatValue("ExposureTime", dValue);
+	if (!StResult.IsOK())
+	{
+		m_strErrorMsg = (CString)StResult.GetCodeString().GetUnicode();
+		return false;
+	}
 
 	return true;
 }

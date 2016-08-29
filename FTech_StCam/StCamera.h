@@ -43,16 +43,40 @@ public:
 	bool OnSaveImage(CString strPath);	// 이미지 저장.
 
 	//----- 확인 및 반환 함수 -----//
-	bool IsConnected() { return m_pvDevice.IsConnected(); }	// 연결 확인.
-	bool IsActive() { return m_isAcquisition; };			// 영상 취득 확인.
-	bool GetDeviceUserID(CString &strCamID);				// Device User ID 반환.
-	bool GetDeviceModelName(CString &strCamID);				// Device Model Name 반환.
+	bool IsConnected() { return m_pvDevice.IsConnected(); }	// 연결 상태 반환.
+	bool IsActive() { return m_isAcquisition; };			// 영상 취득 상태 반환.
+	bool GetDeviceUserID(CString &strValue);				// Device User ID 반환.
+	bool GetDeviceModelName(CString &strValue);				// Device Model Name 반환.
+	bool GetSerialNumber(CString &strValue);				// Serial Number 반환.
+	bool GetOffsetX(int &nValue);							// Offset X 반환.
+	bool GetOffsetY(int &nValue);							// Offset Y 반환.
+	bool GetAcquisitionMode(CString &strValue);				// Acquisition Mode 반환.
+	bool GetAcquisitionFrameRate(double &dValue);			// Frame Rate 반환.
+	bool GetTriggerMode(CString &strValue);					// Trigger Mode 반환.
+	bool GetTriggerSource(CString &strValue);				// Trigger Source 반환.
+	bool GetTriggerOverlap(CString &strValue);				// Trigger Overlap 반환.
+	bool GetExposureMode(CString &strValue);				// Exposure Mode 반환.
+	bool GetExposureTime(double &dValue);					// Exposure Time 반환.
+	CString GetIPAddress() { return m_strIP; }				// IP Address 반환.
+	CString GetMACAddress() { return m_strMAC; }			// MAC Address 반환.
 	int  GetWidth()  { return m_nWidth ; }					// Image Width 반환.
 	int  GetHeight() { return m_nHeight; }					// Image Height 반환.
 	int  GetBPP()	 { return m_nBpp;	 }					// Image Bit per Pixel 반환.
 	double GetGrabTime() { return m_dTime; }				// Grab Tact Time 반환.
 	BYTE* GetImageBuffer() { return m_pbyBuffer; }			// Buffer 반환.
 	CString GetLastErrorMessage();							// 마지막 에러 메시지 반환.
+
+	//----- 설정 함수 -----//
+	bool SetDeviceUserID(CString strValue);					// Device User ID 설정.
+	bool SetOffsetX(int nValue);							// Offset X 설정.
+	bool SetOffsetY(int nValue);							// Offset Y 설정.
+	bool SetAcquisitionFrameRate(double dValue);			// Frame Rate 설정.
+	bool SetTriggerMode(CString strValue);					// Trigger Mode 설정.
+	bool SetTriggerSource(CString strValue);				// Trigger Source 설정.
+	bool SetTriggerOverlap(CString strValue);				// Trigger Overlap 설정.
+	bool SetExposureMode(CString strValue);					// Exposure Mode 설정.
+	bool SetExposureTime(double dValue);					// Exposure Time 설정.
+
 
 protected:
 	LARGE_INTEGER m_Start;
@@ -74,6 +98,8 @@ private :
 	int	m_nWidth;
 	int	m_nHeight;
 	int	m_nBpp;
+	CString m_strIP;
+	CString m_strMAC;
 
 	static UINT BufferThread(LPVOID param);
 	void ShowErrorMessage(char* pcMessage, PvUInt32 nError);
