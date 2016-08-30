@@ -923,6 +923,23 @@ bool CStCamera::SetAcquisitionFrameRate(double dValue)
 	return true;
 }
 
+bool CStCamera::SetAcquisitionMode(CString strValue)
+{
+	if (!m_pvDevice.IsConnected()) return false;
+
+	PvResult StResult = PvResult::Code::NOT_CONNECTED;
+
+	PvString value(strValue);
+	StResult = m_pvDevice.GetGenParameters()->SetEnumValue("AcquisitionMode", value);
+	if (!StResult.IsOK())
+	{
+		m_strErrorMsg = (CString)StResult.GetCodeString().GetUnicode();
+		return false;
+	}
+
+	return true;
+}
+
 bool CStCamera::SetTriggerMode(CString strValue)
 {
 	if (!m_pvDevice.IsConnected()) return false;

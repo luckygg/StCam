@@ -72,6 +72,7 @@ public:
 	bool SetOffsetX(int nValue);							// Offset X 설정.
 	bool SetOffsetY(int nValue);							// Offset Y 설정.
 	bool SetAcquisitionFrameRate(double dValue);			// Frame Rate 설정.
+	bool SetAcquisitionMode(CString strValue);				// Acquistiion Mode 설정.
 	bool SetTriggerMode(CString strValue);					// Trigger Mode 설정.
 	bool SetTriggerSource(CString strValue);				// Trigger Source 설정.
 	bool SetTriggerOverlap(CString strValue);				// Trigger Overlap 설정.
