@@ -839,6 +839,25 @@ bool CStCamera::GetExposureTime(double &dValue)
 	return true;
 }
 
+bool CStCamera::GetPixelFormat(CString &strValue)
+{
+	if (!m_pvDevice.IsConnected()) return false;
+
+	PvResult StResult = PvResult::Code::NOT_CONNECTED;
+
+	PvString value;
+	StResult = m_pvDevice.GetGenParameters()->GetEnumValue("PixelFormat", value);
+	if (!StResult.IsOK())
+	{
+		m_strErrorMsg = (CString)StResult.GetCodeString().GetUnicode();
+		return false;
+	}
+
+	strValue = value.GetUnicode();
+
+	return true;
+}
+
 bool CStCamera::SetDeviceUserID(CString strValue)
 {
 	if (!m_pvDevice.IsConnected()) return false;

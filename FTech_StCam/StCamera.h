@@ -57,6 +57,7 @@ public:
 	bool GetTriggerOverlap(CString &strValue);				// Trigger Overlap 반환.
 	bool GetExposureMode(CString &strValue);				// Exposure Mode 반환.
 	bool GetExposureTime(double &dValue);					// Exposure Time 반환.
+	bool GetPixelFormat(CString &strValue);					// Pixel Format 반환.
 	CString GetIPAddress() { return m_strIP; }				// IP Address 반환.
 	CString GetMACAddress() { return m_strMAC; }			// MAC Address 반환.
 	int  GetWidth()  { return m_nWidth ; }					// Image Width 반환.
