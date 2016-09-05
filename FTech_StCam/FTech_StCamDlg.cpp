@@ -50,7 +50,7 @@ BOOL CFTech_StCamDlg::OnInitDialog()
 	SetIcon(m_hIcon, TRUE);			// Set big icon
 	SetIcon(m_hIcon, FALSE);		// Set small icon
 
-	m_ThdDisplay.RegisterCallback(this,&CFTech_StCamDlg::CallbackFunc);
+	m_ThdDisplay.RegisterCallback(this,&CFTech_StCamDlg::CallbackFunc, this);
 
 	return TRUE;  // return TRUE  unless you set the focus to a control
 }
@@ -209,7 +209,7 @@ void CFTech_StCamDlg::CreateBmpInfo(int nWidth, int nHeight, int nBpp)
 	m_pBitmapInfo->bmiHeader.biHeight = -nHeight;
 }
 
-void CFTech_StCamDlg::CallbackFunc()
+void CFTech_StCamDlg::CallbackFunc(void* pMain)
 {
 	Sleep(30);
 
