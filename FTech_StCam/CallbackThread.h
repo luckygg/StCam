@@ -43,6 +43,7 @@ public:
 	}
 
 	void Start();
+	void Start(int nRepeat);
 	void Stop();
 
 	void SetPriority( int aPriority );
@@ -72,4 +73,5 @@ private:
 	DWORD m_dwReturnValue;
 	DWORD m_ID;
 	bool m_bStop;
+	int m_nRptCnt;
 };

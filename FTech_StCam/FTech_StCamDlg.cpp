@@ -116,11 +116,6 @@ void CFTech_StCamDlg::OnBnClickedBtnConnection()
 			GetDlgItem(IDC_BTN_ACQ)->EnableWindow(TRUE);
 			SetDlgItemText(IDC_BTN_ACQ, L"Start");
 			SetDlgItemText(IDC_BTN_CONNECTION, L"Disconnect");
-
-			m_StCamera.SetTriggerMode(L"On");
-			m_StCamera.SetTriggerSource(L"Hardware");
-			m_StCamera.SetExposureMode(L"TriggerWidth");
-			m_StCamera.SetExposureTime(15.55);
 		}
 	}
 	else

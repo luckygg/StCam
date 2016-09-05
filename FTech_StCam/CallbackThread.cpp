@@ -11,6 +11,7 @@ CCallbackThread::CCallbackThread()
 	, m_ID( 0 )
 	, m_bStop( false )
 	, m_dwReturnValue( 0 )
+	, m_nRptCnt(-1)
 {
 	m_pListener = NULL;
 }
@@ -36,6 +37,21 @@ void CCallbackThread::Start()
 		this,				// Parameter
 		0,					// Creation flags
 		&m_ID );			// Thread ID
+}
+
+void CCallbackThread::Start(int nRepeat)
+{
+	m_bStop = false;
+
+	m_Handle = ::CreateThread(
+		NULL,				// Security attributes
+		0,					// Stack size, 0 is default
+		Link,				// Start address
+		this,				// Parameter
+		0,					// Creation flags
+		&m_ID );			// Thread ID
+
+	m_nRptCnt = nRepeat;
 }
 
 // ==========================================================================
@@ -108,15 +124,30 @@ void CCallbackThread::OnImageCallback()
 DWORD CCallbackThread::Function(LPVOID param)
 {
 	CCallbackThread *pMain = (CCallbackThread*)param; 
-
-	for ( ;; )
+	
+	if (pMain->m_nRptCnt == -1)
 	{
-		if ( IsStopping() )
-			break;
+		for ( ;; )
+		{
+			if ( IsStopping() )
+				break;
 
-		pMain->OnImageCallback();
+			pMain->OnImageCallback();
 
-		Sleep(0);
+			Sleep(0);
+		}
+	}
+	else
+	{
+		for (int i=0; i<pMain->m_nRptCnt; i++)
+		{
+			if ( IsStopping() )
+				break;
+
+			pMain->OnImageCallback();
+
+			Sleep(0);
+		}
 	}
 
 	return 0;
