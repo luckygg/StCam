@@ -28,7 +28,7 @@ public :
 	int m_nBpp;
 	BITMAPINFO*	m_pBitmapInfo;
 	BYTE* m_pBuffer;
-	void CallbackFunc(void *pMain);
+	void CallbackFunc();
 	void OnDisplay(BYTE* pBuffer);
 	void CreateBmpInfo(int nWidth, int nHeight, int nBpp);
 // Implementation

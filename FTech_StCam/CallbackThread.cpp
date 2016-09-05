@@ -101,7 +101,7 @@ DWORD CCallbackThread::GetReturnValue()
 void CCallbackThread::OnImageCallback()
 {
 	if( m_pListener )
-		m_pListener->Invoke(m_pMain);
+		m_pListener->Invoke();
 }
 
 // ==========================================================================

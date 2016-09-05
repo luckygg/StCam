@@ -7,26 +7,26 @@
 class ListenerBase
 {
 public:
-	virtual void Invoke(void *pMain) = 0;
+	virtual void Invoke() = 0;    
 };
 
 template <class T>
 class MemFuncListener : public ListenerBase
 {
 public:
-	MemFuncListener(T* obj, void (T::*cbf)(void *))
+	MemFuncListener(T* obj, void (T::*cbf)())
 	{
 		m_obj = obj;
 		m_cbf = cbf;
 	};
 
-	virtual void Invoke(void *pMain)
+	virtual void Invoke()
 	{
-		(m_obj->*m_cbf)(pMain);
+		(m_obj->*m_cbf)();
 	};
 private:
 	T* m_obj;
-	void (T::*m_cbf)(void *);
+	void (T::*m_cbf)();
 };
 
 class CCallbackThread
@@ -36,11 +36,10 @@ public:
 	~CCallbackThread();
 
 	template <class T>
-	void RegisterCallback(T *obj, void (T::*cbf)(void *), void* pMain)
+	void RegisterCallback(T *obj, void (T::*cbf)())
 	{
 		UnregisterCallback();
 		m_pListener = new MemFuncListener<T>(obj, cbf);
-		m_pMain = pMain;
 	}
 
 	void Start();
@@ -64,13 +63,11 @@ protected:
 			delete m_pListener;
 			m_pListener = NULL;
 		}
-		m_pMain = NULL;
 	}
 
 	bool IsStopping() const;
 private:
 	ListenerBase* m_pListener;
-	void* m_pMain;
 	HANDLE m_Handle;
 	DWORD m_dwReturnValue;
 	DWORD m_ID;
