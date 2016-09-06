@@ -1,5 +1,14 @@
 #pragma once
 
+//----------------------------------------------------------
+// CGraphEx Control
+//----------------------------------------------------------
+// Programmed by William Kim
+//----------------------------------------------------------
+// Last Update : 2016-09-06 10:29
+// Modified by William Kim
+//----------------------------------------------------------
+
 #include <PvDeviceFinderWnd.h>
 #include <PvDevice.h>
 #include <PvGenParameter.h>
