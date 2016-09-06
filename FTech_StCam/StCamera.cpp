@@ -1027,6 +1027,28 @@ bool CStCamera::SetExposureMode(CString strValue)
 	return true;
 }
 
+bool CStCamera::SetUserSetSelector(UserSelector selector)
+{
+	if (!m_pvDevice.IsConnected()) return false;
+
+	PvResult StResult = PvResult::Code::NOT_CONNECTED;
+
+	PvString value;
+	if (selector == FACTORY)
+		value = "Factory";
+	else if (selector == USER1)
+		value = "UserSet1";
+
+	StResult = m_pvDevice.GetGenParameters()->SetEnumValue("UserSetSelector", value);
+	if (!StResult.IsOK())
+	{
+		m_strErrorMsg = (CString)StResult.GetCodeString().GetUnicode();
+		return false;
+	}
+
+	return true;
+}
+
 bool CStCamera::SetExposureTime(double dValue)
 {
 	if (!m_pvDevice.IsConnected()) return false;

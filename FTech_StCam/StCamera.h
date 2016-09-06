@@ -14,6 +14,8 @@
 #include <PvDevice.h>
 #include <PvAcquisitionStateManager.h>
 
+enum UserSelector{ FACTORY=0, USER1=1 };
+
 class CStCamera
 {
 public:
@@ -79,6 +81,7 @@ public:
 	bool SetTriggerOverlap(CString strValue);				// Trigger Overlap 설정.
 	bool SetExposureMode(CString strValue);					// Exposure Mode 설정.
 	bool SetExposureTime(double dValue);					// Exposure Time 설정.
+	bool SetUserSetSelector(UserSelector selector);			// UserSetSelector 설정.
 
 
 protected:
