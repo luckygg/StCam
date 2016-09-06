@@ -821,21 +821,21 @@ bool CStCamera::GetExposureMode(CString &strValue)
 	return true;
 }
 
-bool CStCamera::GetExposureTime(double &dValue)
+bool CStCamera::GetExposureTimeRaw(int &nValue)
 {
 	if (!m_pvDevice.IsConnected()) return false;
 
 	PvResult StResult = PvResult::Code::NOT_CONNECTED;
 
-	double value;
-	StResult = m_pvDevice.GetGenParameters()->GetFloatValue("ExposureTime", value);
+	PvInt64 value;
+	StResult = m_pvDevice.GetGenParameters()->GetIntegerValue("ExposureTimeRaw", value);
 	if (!StResult.IsOK())
 	{
 		m_strErrorMsg = (CString)StResult.GetCodeString().GetUnicode();
 		return false;
 	}
 
-	dValue = value;
+	nValue = (int)value;
 
 	return true;
 }

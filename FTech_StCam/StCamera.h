@@ -5,7 +5,7 @@
 //----------------------------------------------------------
 // Programmed by William Kim
 //----------------------------------------------------------
-// Last Update : 2016-09-06 10:29
+// Last Update : 2016-09-06 13:32
 // Modified by William Kim
 //----------------------------------------------------------
 
@@ -41,13 +41,13 @@ public:
 	//----- 영상 취득 제어 -----//
 	bool OnStartAcquisition(); // 영상 취득 시작.
 	bool OnStopAcquisition();  // 영상 취득 중지.
-	
+
 	//----- 영상 취득 방식 선택 -----//
 	bool SetContinuousMode();	// 프리런 모드 설정.
 	bool SetSoftTriggerMode();	// 소프트웨어 트리거 설정.
 	bool SetHardTriggerMode();  // 하드웨어 트리거 설정.
 	bool OnTriggerEvent();		// 소프트웨어 트리거 이벤트.
-	
+
 	//----- 영상 저장-----//
 	bool OnSaveImage(CString strPath);	// 이미지 저장.
 
@@ -69,7 +69,7 @@ public:
 	bool GetTriggerSource(CString &strValue);				// Trigger Source 반환.
 	bool GetTriggerOverlap(CString &strValue);				// Trigger Overlap 반환.
 	bool GetExposureMode(CString &strValue);				// Exposure Mode 반환.
-	bool GetExposureTime(double &dValue);					// Exposure Time 반환.
+	bool GetExposureTimeRaw(int &nValue);					// Exposure Time 반환.
 	bool GetPixelFormat(CString &strValue);					// Pixel Format 반환.
 	bool GetUserSetDefaultSelector(CString &strValue);		// UserSet 기본 값 반환.
 	CString GetIPAddress() { return m_strIP; }				// IP Address 반환.
@@ -109,7 +109,7 @@ private :
 	PvStream		m_pvStream;
 	PvPipeline		m_pvPipeline;
 	PvDevice		m_pvDevice;
-	
+
 	CString m_strErrorMsg;
 	bool m_isAcquisition;
 	int	m_nWidth;
