@@ -14,6 +14,7 @@ CStCamera::CStCamera(void)
 	m_nWidth	= 0;
 	m_nHeight	= 0;
 	m_nBpp		= 0;
+	m_dTime		= 0;
 	m_strIP		= L"";
 	m_strMAC	= L"";
 
