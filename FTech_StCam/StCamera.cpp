@@ -858,6 +858,25 @@ bool CStCamera::GetPixelFormat(CString &strValue)
 	return true;
 }
 
+bool CStCamera::GetUserSetDefaultSelector(CString &strValue)
+{
+	if (!m_pvDevice.IsConnected()) return false;
+
+	PvResult StResult = PvResult::Code::NOT_CONNECTED;
+
+	PvString value;
+	StResult = m_pvDevice.GetGenParameters()->GetEnumValue("UserSetDefaultSelector", value);
+	if (!StResult.IsOK())
+	{
+		m_strErrorMsg = (CString)StResult.GetCodeString().GetUnicode();
+		return false;
+	}
+
+	strValue = value.GetUnicode();
+
+	return true;
+}
+
 bool CStCamera::SetDeviceUserID(CString strValue)
 {
 	if (!m_pvDevice.IsConnected()) return false;
