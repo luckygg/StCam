@@ -1027,18 +1027,13 @@ bool CStCamera::SetExposureMode(CString strValue)
 	return true;
 }
 
-bool CStCamera::SetUserSetSelector(UserSelector selector)
+bool CStCamera::SetUserSetSelector(CString strValue)
 {
 	if (!m_pvDevice.IsConnected()) return false;
 
 	PvResult StResult = PvResult::Code::NOT_CONNECTED;
 
-	PvString value;
-	if (selector == FACTORY)
-		value = "Factory";
-	else if (selector == USER1)
-		value = "UserSet1";
-
+	PvString value(strValue);
 	StResult = m_pvDevice.GetGenParameters()->SetEnumValue("UserSetSelector", value);
 	if (!StResult.IsOK())
 	{
