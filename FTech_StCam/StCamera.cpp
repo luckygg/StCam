@@ -1175,6 +1175,40 @@ bool CStCamera::OnTriggerEvent()
 	return true;
 }
 
+bool CStCamera::OnUserSetLoad()
+{
+	if (!m_pvDevice.IsConnected()) return false;
+
+	PvResult StResult = PvResult::Code::NOT_CONNECTED;
+
+	PvString Name;
+	StResult = m_pvDevice.GetGenParameters()->ExecuteCommand("UserSetLoad");
+	if (!StResult.IsOK())
+	{
+		m_strErrorMsg = (CString)StResult.GetCodeString().GetUnicode();
+		return false;
+	}
+
+	return true;
+}
+
+bool CStCamera::OnUserSetSave()
+{
+	if (!m_pvDevice.IsConnected()) return false;
+
+	PvResult StResult = PvResult::Code::NOT_CONNECTED;
+
+	PvString Name;
+	StResult = m_pvDevice.GetGenParameters()->ExecuteCommand("UserSetSave");
+	if (!StResult.IsOK())
+	{
+		m_strErrorMsg = (CString)StResult.GetCodeString().GetUnicode();
+		return false;
+	}
+
+	return true;
+}
+
 UINT CStCamera::BufferThread(LPVOID param)
 {
 	CStCamera* pThis = reinterpret_cast<CStCamera*>(param);

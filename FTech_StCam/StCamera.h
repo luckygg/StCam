@@ -44,6 +44,10 @@ public:
 	//----- 영상 저장-----//
 	bool OnSaveImage(CString strPath);	// 이미지 저장.
 
+	//----- 설정 저장 / 불러오기 -----//
+	bool OnUserSetSave();
+	bool OnUserSetLoad();
+
 	//----- 확인 및 반환 함수 -----//
 	bool IsConnected() { return m_pvDevice.IsConnected(); }	// 연결 상태 반환.
 	bool IsActive() { return m_isAcquisition; };			// 영상 취득 상태 반환.
