@@ -488,7 +488,7 @@ bool CStCamera::OnStopAcquisition()
 
 void CStCamera::ShowErrorMessage(char* pcMessage, PvUInt32 nError)
 {
-	int Len = strlen(pcMessage);
+	int Len = (int)strlen(pcMessage);
 	char* Tmp = new char[128];
 	strcpy_s(Tmp,Len+1,pcMessage);
 

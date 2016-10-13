@@ -5,7 +5,7 @@
 //----------------------------------------------------------
 // Programmed by William Kim
 //----------------------------------------------------------
-// Last Update : 2016-09-06 13:32
+// Last Update : 2016-10-14 13:32
 // Modified by William Kim
 //----------------------------------------------------------
 
@@ -28,9 +28,6 @@ class CStCamera
 public:
 	CStCamera(void);
 	~CStCamera(void);
-
-	HANDLE m_hGrabDone;
-	HANDLE m_hThTerminate;
 
 	//----- 연결 및 해제 -----//
 	bool OnConnect(); // Dialog 선택 연결.
@@ -94,7 +91,6 @@ public:
 	bool SetExposureTime(double dValue);					// Exposure Time 설정.
 	bool SetUserSetSelector(CString strValue);				// UserSetSelector 설정.
 
-
 protected:
 	LARGE_INTEGER m_Start;
 	LARGE_INTEGER m_Stop;
@@ -102,6 +98,9 @@ protected:
 	double		  m_dTime;
 
 private :
+	HANDLE m_hGrabDone;
+	HANDLE m_hThTerminate;
+
 	BYTE*			m_pbyBuffer;
 	BITMAPINFO*		m_pBitmapInfo;
 	PvAcquisitionStateManager *m_ppvAcqManager;
