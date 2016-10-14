@@ -1129,7 +1129,7 @@ bool CStCamera::SetExposureMode(CString strValue)
 	return true;
 }
 
-bool CStCamera::SetUserSetSelector(CString strValue)
+bool CStCamera::SetUserSetSelector(USER User)
 {
 	if (!m_pvDevice.IsConnected())
 	{
@@ -1139,7 +1139,13 @@ bool CStCamera::SetUserSetSelector(CString strValue)
 
 	PvResult StResult = PvResult::Code::NOT_CONNECTED;
 
-	PvString value(strValue);
+	PvString value="";
+	switch (User)
+	{
+		case USER_Default	: value = "Default" ; break;
+		case USER_UserSet1	: value = "UserSet1"; break;
+	}
+
 	StResult = m_pvDevice.GetGenParameters()->SetEnumValue("UserSetSelector", value);
 	if (!StResult.IsOK())
 	{

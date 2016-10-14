@@ -24,6 +24,7 @@
 #include <PvAcquisitionStateManager.h>
 
 enum AWB {AWB_Off=0, AWB_Preset1, AWB_Preset2, AWB_Preset3, AWB_Continuous, AWB_Once};
+enum USER {USER_Default=0, USER_UserSet1};
 class CStCamera
 {
 public:
@@ -94,7 +95,7 @@ public:
 	bool SetTriggerOverlap(CString strValue);				// Trigger Overlap 설정.
 	bool SetExposureMode(CString strValue);					// Exposure Mode 설정.
 	bool SetExposureTime(double dValue);					// Exposure Time 설정.
-	bool SetUserSetSelector(CString strValue);				// UserSetSelector 설정.
+	bool SetUserSetSelector(USER User);						// UserSetSelector 설정.
 	
 
 protected:
