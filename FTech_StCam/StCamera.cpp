@@ -404,7 +404,12 @@ void CStCamera::OnDisconnect()
 
 bool CStCamera::OnStartAcquisition()
 {
-	if (!m_pvDevice.IsConnected()) return false;
+	if (!m_pvDevice.IsConnected())
+	{
+		m_strErrorMsg = L"Device is not connected.";
+		return false;
+	}
+
 	if (m_isAcquisition == true)
 		OnStopAcquisition();
 	
@@ -459,7 +464,11 @@ bool CStCamera::OnStartAcquisition()
 
 bool CStCamera::OnStopAcquisition()
 {
-	if (!m_pvDevice.IsConnected()) return false;
+	if (!m_pvDevice.IsConnected())
+	{
+		m_strErrorMsg = L"Device is not connected.";
+		return false;
+	}
 
 	PvResult StResult = PvResult::Code::NOT_CONNECTED;
 
@@ -614,7 +623,11 @@ bool CStCamera::OnSaveImage(CString strPath)
 
 bool CStCamera::GetDeviceUserID(CString &strValue)
 {
-	if (!m_pvDevice.IsConnected()) return false;
+	if (!m_pvDevice.IsConnected())
+	{
+		m_strErrorMsg = L"Device is not connected.";
+		return false;
+	}
 
 	PvResult StResult = PvResult::Code::NOT_CONNECTED;
 
@@ -633,7 +646,11 @@ bool CStCamera::GetDeviceUserID(CString &strValue)
 
 bool CStCamera::GetDeviceModelName(CString &strValue)
 {
-	if (!m_pvDevice.IsConnected()) return false;
+	if (!m_pvDevice.IsConnected())
+	{
+		m_strErrorMsg = L"Device is not connected.";
+		return false;
+	}
 
 	PvResult StResult = PvResult::Code::NOT_CONNECTED;
 
@@ -652,7 +669,11 @@ bool CStCamera::GetDeviceModelName(CString &strValue)
 
 bool CStCamera::GetSerialNumber(CString &strValue)
 {
-	if (!m_pvDevice.IsConnected()) return false;
+	if (!m_pvDevice.IsConnected())
+	{
+		m_strErrorMsg = L"Device is not connected.";
+		return false;
+	}
 
 	PvResult StResult = PvResult::Code::NOT_CONNECTED;
 
@@ -671,7 +692,11 @@ bool CStCamera::GetSerialNumber(CString &strValue)
 
 bool CStCamera::GetOffsetX(int &nValue)
 {
-	if (!m_pvDevice.IsConnected()) return false;
+	if (!m_pvDevice.IsConnected())
+	{
+		m_strErrorMsg = L"Device is not connected.";
+		return false;
+	}
 
 	PvResult StResult = PvResult::Code::NOT_CONNECTED;
 
@@ -690,7 +715,11 @@ bool CStCamera::GetOffsetX(int &nValue)
 
 bool CStCamera::GetOffsetY(int &nValue)
 {
-	if (!m_pvDevice.IsConnected()) return false;
+	if (!m_pvDevice.IsConnected())
+	{
+		m_strErrorMsg = L"Device is not connected.";
+		return false;
+	}
 
 	PvResult StResult = PvResult::Code::NOT_CONNECTED;
 
@@ -709,7 +738,11 @@ bool CStCamera::GetOffsetY(int &nValue)
 
 bool CStCamera::GetAcquisitionMode(CString &strValue)
 {
-	if (!m_pvDevice.IsConnected()) return false;
+	if (!m_pvDevice.IsConnected())
+	{
+		m_strErrorMsg = L"Device is not connected.";
+		return false;
+	}
 
 	PvResult StResult = PvResult::Code::NOT_CONNECTED;
 
@@ -728,7 +761,11 @@ bool CStCamera::GetAcquisitionMode(CString &strValue)
 
 bool CStCamera::GetAcquisitionFrameRate(double &dValue)
 {
-	if (!m_pvDevice.IsConnected()) return false;
+	if (!m_pvDevice.IsConnected())
+	{
+		m_strErrorMsg = L"Device is not connected.";
+		return false;
+	}
 
 	PvResult StResult = PvResult::Code::NOT_CONNECTED;
 
@@ -747,7 +784,11 @@ bool CStCamera::GetAcquisitionFrameRate(double &dValue)
 
 bool CStCamera::GetTriggerMode(CString &strValue)
 {
-	if (!m_pvDevice.IsConnected()) return false;
+	if (!m_pvDevice.IsConnected())
+	{
+		m_strErrorMsg = L"Device is not connected.";
+		return false;
+	}
 
 	PvResult StResult = PvResult::Code::NOT_CONNECTED;
 
@@ -766,7 +807,11 @@ bool CStCamera::GetTriggerMode(CString &strValue)
 
 bool CStCamera::GetTriggerSource(CString &strValue)
 {
-	if (!m_pvDevice.IsConnected()) return false;
+	if (!m_pvDevice.IsConnected())
+	{
+		m_strErrorMsg = L"Device is not connected.";
+		return false;
+	}
 
 	PvResult StResult = PvResult::Code::NOT_CONNECTED;
 
@@ -785,7 +830,11 @@ bool CStCamera::GetTriggerSource(CString &strValue)
 
 bool CStCamera::GetTriggerOverlap(CString &strValue)
 {
-	if (!m_pvDevice.IsConnected()) return false;
+	if (!m_pvDevice.IsConnected())
+	{
+		m_strErrorMsg = L"Device is not connected.";
+		return false;
+	}
 
 	PvResult StResult = PvResult::Code::NOT_CONNECTED;
 
@@ -804,7 +853,11 @@ bool CStCamera::GetTriggerOverlap(CString &strValue)
 
 bool CStCamera::GetExposureMode(CString &strValue)
 {
-	if (!m_pvDevice.IsConnected()) return false;
+	if (!m_pvDevice.IsConnected())
+	{
+		m_strErrorMsg = L"Device is not connected.";
+		return false;
+	}
 
 	PvResult StResult = PvResult::Code::NOT_CONNECTED;
 
@@ -823,7 +876,11 @@ bool CStCamera::GetExposureMode(CString &strValue)
 
 bool CStCamera::GetExposureTimeRaw(int &nValue)
 {
-	if (!m_pvDevice.IsConnected()) return false;
+	if (!m_pvDevice.IsConnected())
+	{
+		m_strErrorMsg = L"Device is not connected.";
+		return false;
+	}
 
 	PvResult StResult = PvResult::Code::NOT_CONNECTED;
 
@@ -842,7 +899,11 @@ bool CStCamera::GetExposureTimeRaw(int &nValue)
 
 bool CStCamera::GetPixelFormat(CString &strValue)
 {
-	if (!m_pvDevice.IsConnected()) return false;
+	if (!m_pvDevice.IsConnected())
+	{
+		m_strErrorMsg = L"Device is not connected.";
+		return false;
+	}
 
 	PvResult StResult = PvResult::Code::NOT_CONNECTED;
 
@@ -861,7 +922,11 @@ bool CStCamera::GetPixelFormat(CString &strValue)
 
 bool CStCamera::GetUserSetDefaultSelector(CString &strValue)
 {
-	if (!m_pvDevice.IsConnected()) return false;
+	if (!m_pvDevice.IsConnected())
+	{
+		m_strErrorMsg = L"Device is not connected.";
+		return false;
+	}
 
 	PvResult StResult = PvResult::Code::NOT_CONNECTED;
 
@@ -880,7 +945,11 @@ bool CStCamera::GetUserSetDefaultSelector(CString &strValue)
 
 bool CStCamera::SetDeviceUserID(CString strValue)
 {
-	if (!m_pvDevice.IsConnected()) return false;
+	if (!m_pvDevice.IsConnected())
+	{
+		m_strErrorMsg = L"Device is not connected.";
+		return false;
+	}
 
 	PvResult StResult = PvResult::Code::NOT_CONNECTED;
 
@@ -897,7 +966,11 @@ bool CStCamera::SetDeviceUserID(CString strValue)
 
 bool CStCamera::SetOffsetX(int nValue)
 {
-	if (!m_pvDevice.IsConnected()) return false;
+	if (!m_pvDevice.IsConnected())
+	{
+		m_strErrorMsg = L"Device is not connected.";
+		return false;
+	}
 
 	PvResult StResult = PvResult::Code::NOT_CONNECTED;
 
@@ -913,7 +986,11 @@ bool CStCamera::SetOffsetX(int nValue)
 
 bool CStCamera::SetOffsetY(int nValue)
 {
-	if (!m_pvDevice.IsConnected()) return false;
+	if (!m_pvDevice.IsConnected())
+	{
+		m_strErrorMsg = L"Device is not connected.";
+		return false;
+	}
 
 	PvResult StResult = PvResult::Code::NOT_CONNECTED;
 
@@ -929,7 +1006,11 @@ bool CStCamera::SetOffsetY(int nValue)
 
 bool CStCamera::SetAcquisitionFrameRate(double dValue)
 {
-	if (!m_pvDevice.IsConnected()) return false;
+	if (!m_pvDevice.IsConnected())
+	{
+		m_strErrorMsg = L"Device is not connected.";
+		return false;
+	}
 
 	PvResult StResult = PvResult::Code::NOT_CONNECTED;
 
@@ -945,7 +1026,11 @@ bool CStCamera::SetAcquisitionFrameRate(double dValue)
 
 bool CStCamera::SetAcquisitionMode(CString strValue)
 {
-	if (!m_pvDevice.IsConnected()) return false;
+	if (!m_pvDevice.IsConnected())
+	{
+		m_strErrorMsg = L"Device is not connected.";
+		return false;
+	}
 
 	PvResult StResult = PvResult::Code::NOT_CONNECTED;
 
@@ -962,7 +1047,11 @@ bool CStCamera::SetAcquisitionMode(CString strValue)
 
 bool CStCamera::SetTriggerMode(CString strValue)
 {
-	if (!m_pvDevice.IsConnected()) return false;
+	if (!m_pvDevice.IsConnected())
+	{
+		m_strErrorMsg = L"Device is not connected.";
+		return false;
+	}
 
 	PvResult StResult = PvResult::Code::NOT_CONNECTED;
 
@@ -979,7 +1068,11 @@ bool CStCamera::SetTriggerMode(CString strValue)
 
 bool CStCamera::SetTriggerSource(CString strValue)
 {
-	if (!m_pvDevice.IsConnected()) return false;
+	if (!m_pvDevice.IsConnected())
+	{
+		m_strErrorMsg = L"Device is not connected.";
+		return false;
+	}
 
 	PvResult StResult = PvResult::Code::NOT_CONNECTED;
 
@@ -996,7 +1089,11 @@ bool CStCamera::SetTriggerSource(CString strValue)
 
 bool CStCamera::SetTriggerOverlap(CString strValue)
 {
-	if (!m_pvDevice.IsConnected()) return false;
+	if (!m_pvDevice.IsConnected())
+	{
+		m_strErrorMsg = L"Device is not connected.";
+		return false;
+	}
 
 	PvResult StResult = PvResult::Code::NOT_CONNECTED;
 
@@ -1013,7 +1110,11 @@ bool CStCamera::SetTriggerOverlap(CString strValue)
 
 bool CStCamera::SetExposureMode(CString strValue)
 {
-	if (!m_pvDevice.IsConnected()) return false;
+	if (!m_pvDevice.IsConnected())
+	{
+		m_strErrorMsg = L"Device is not connected.";
+		return false;
+	}
 
 	PvResult StResult = PvResult::Code::NOT_CONNECTED;
 
@@ -1030,7 +1131,11 @@ bool CStCamera::SetExposureMode(CString strValue)
 
 bool CStCamera::SetUserSetSelector(CString strValue)
 {
-	if (!m_pvDevice.IsConnected()) return false;
+	if (!m_pvDevice.IsConnected())
+	{
+		m_strErrorMsg = L"Device is not connected.";
+		return false;
+	}
 
 	PvResult StResult = PvResult::Code::NOT_CONNECTED;
 
@@ -1047,7 +1152,11 @@ bool CStCamera::SetUserSetSelector(CString strValue)
 
 bool CStCamera::SetExposureTime(double dValue)
 {
-	if (!m_pvDevice.IsConnected()) return false;
+	if (!m_pvDevice.IsConnected())
+	{
+		m_strErrorMsg = L"Device is not connected.";
+		return false;
+	}
 
 	PvResult StResult = PvResult::Code::NOT_CONNECTED;
 
@@ -1063,7 +1172,11 @@ bool CStCamera::SetExposureTime(double dValue)
 
 bool CStCamera::SetContinuousMode()
 {
-	if (!m_pvDevice.IsConnected()) return false;
+	if (!m_pvDevice.IsConnected())
+	{
+		m_strErrorMsg = L"Device is not connected.";
+		return false;
+	}
 
 	PvResult StResult = PvResult::Code::NOT_CONNECTED;
 
@@ -1087,7 +1200,11 @@ bool CStCamera::SetContinuousMode()
 
 bool CStCamera::SetSoftTriggerMode()
 {
-	if (!m_pvDevice.IsConnected()) return false;
+	if (!m_pvDevice.IsConnected())
+	{
+		m_strErrorMsg = L"Device is not connected.";
+		return false;
+	}
 
 	PvResult StResult = PvResult::Code::NOT_CONNECTED;
 
@@ -1125,7 +1242,11 @@ bool CStCamera::SetSoftTriggerMode()
 
 bool CStCamera::SetHardTriggerMode()
 {
-	if (!m_pvDevice.IsConnected()) return false;
+	if (!m_pvDevice.IsConnected())
+	{
+		m_strErrorMsg = L"Device is not connected.";
+		return false;
+	}
 
 	PvResult StResult = PvResult::Code::NOT_CONNECTED;
 
@@ -1156,7 +1277,11 @@ bool CStCamera::SetHardTriggerMode()
 
 bool CStCamera::OnTriggerEvent()
 {
-	if (!m_pvDevice.IsConnected()) return false;
+	if (!m_pvDevice.IsConnected())
+	{
+		m_strErrorMsg = L"Device is not connected.";
+		return false;
+	}
 
 	PvResult StResult = PvResult::Code::NOT_CONNECTED;
 
@@ -1173,7 +1298,11 @@ bool CStCamera::OnTriggerEvent()
 
 bool CStCamera::OnUserSetLoad()
 {
-	if (!m_pvDevice.IsConnected()) return false;
+	if (!m_pvDevice.IsConnected())
+	{
+		m_strErrorMsg = L"Device is not connected.";
+		return false;
+	}
 
 	PvResult StResult = PvResult::Code::NOT_CONNECTED;
 
@@ -1188,9 +1317,107 @@ bool CStCamera::OnUserSetLoad()
 	return true;
 }
 
+bool CStCamera::OnAutoWhiteBalance(AWB Type)
+{
+	if (!m_pvDevice.IsConnected())
+	{
+		m_strErrorMsg = L"Device is not connected.";
+		return false;
+	}
+
+	PvResult StResult = PvResult::Code::NOT_CONNECTED;
+
+	PvString Name;
+	switch (Type)
+	{
+	case AWB_Off :
+		StResult = m_pvDevice.GetGenParameters()->SetEnumValue("BalanceWhiteAuto", "Off");
+		break;
+	case AWB_Preset1 :
+		StResult = m_pvDevice.GetGenParameters()->SetEnumValue("BalanceWhiteAuto", "Preset1");
+		break;
+	case AWB_Preset2 :
+		StResult = m_pvDevice.GetGenParameters()->SetEnumValue("BalanceWhiteAuto", "Preset2");
+		break;
+	case AWB_Preset3 :
+		StResult = m_pvDevice.GetGenParameters()->SetEnumValue("BalanceWhiteAuto", "Preset3");
+		break;
+	case AWB_Continuous :
+		StResult = m_pvDevice.GetGenParameters()->SetEnumValue("BalanceWhiteAuto", "Continuous");
+		break;
+	case AWB_Once :
+		StResult = m_pvDevice.GetGenParameters()->SetEnumValue("BalanceWhiteAuto", "Once");
+		break;
+	}
+
+	if (!StResult.IsOK())
+	{
+		m_strErrorMsg = (CString)StResult.GetCodeString().GetUnicode();
+		return false;
+	}
+
+	return true;
+}
+bool CStCamera::OnSaveAWBValueOnceToPreset(int nPresetNum)
+{
+	if (!m_pvDevice.IsConnected())
+	{
+		m_strErrorMsg = L"Device is not connected.";
+		return false;
+	}
+
+	if (nPresetNum < 1 || nPresetNum > 3)
+	{
+		m_strErrorMsg = L"Out of range of AWB Preset number.";
+		return false;
+	}
+
+	PvResult StResult = PvResult::Code::NOT_CONNECTED;
+	CString strPreset=L"";
+	strPreset.Format(L"Preset%d",nPresetNum);
+
+	CString Parameter=L"";
+	PvString Name="";
+	PvInt64 value=0;
+
+	for (int i=0; i<4; i++)
+	{
+		switch (i)
+		{
+			case 0 : Parameter = L"BalanceRatio_R_"; break;
+			case 1 : Parameter = L"BalanceRatio_Gr_"; break;
+			case 2 : Parameter = L"BalanceRatio_B_"; break;
+			case 3 : Parameter = L"BalanceRatio_Gb_"; break;
+		}
+		
+		Name = PvString(Parameter+L"Once");
+		CString Debug = Name.GetUnicode();
+		StResult = m_pvDevice.GetGenParameters()->GetIntegerValue(Name, value);
+		if (!StResult.IsOK())
+		{
+			m_strErrorMsg = (CString)StResult.GetCodeString().GetUnicode();
+			return false;
+		}
+		Name = PvString(Parameter+strPreset);
+		Debug = Name.GetUnicode();
+		StResult = m_pvDevice.GetGenParameters()->SetIntegerValue(Name, value);
+		if (!StResult.IsOK())
+		{
+			m_strErrorMsg = (CString)StResult.GetCodeString().GetUnicode();
+			return false;
+		}
+	}
+	
+	return true;
+}
+
 bool CStCamera::OnUserSetSave()
 {
-	if (!m_pvDevice.IsConnected()) return false;
+	if (!m_pvDevice.IsConnected())
+	{
+		m_strErrorMsg = L"Device is not connected.";
+		return false;
+	}
 
 	PvResult StResult = PvResult::Code::NOT_CONNECTED;
 

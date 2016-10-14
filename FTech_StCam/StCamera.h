@@ -23,6 +23,7 @@
 #include <PvDevice.h>
 #include <PvAcquisitionStateManager.h>
 
+enum AWB {AWB_Off=0, AWB_Preset1, AWB_Preset2, AWB_Preset3, AWB_Continuous, AWB_Once};
 class CStCamera
 {
 public:
@@ -51,6 +52,10 @@ public:
 	//----- 설정 저장 / 불러오기 -----//
 	bool OnUserSetSave();
 	bool OnUserSetLoad();
+	
+	//----- Auto White Balance -----//
+	bool OnAutoWhiteBalance(AWB Type);
+	bool OnSaveAWBValueOnceToPreset(int nPresetNum);
 
 	//----- 확인 및 반환 함수 -----//
 	bool IsConnected() { return m_pvDevice.IsConnected(); }	// 연결 상태 반환.
@@ -90,6 +95,7 @@ public:
 	bool SetExposureMode(CString strValue);					// Exposure Mode 설정.
 	bool SetExposureTime(double dValue);					// Exposure Time 설정.
 	bool SetUserSetSelector(CString strValue);				// UserSetSelector 설정.
+	
 
 protected:
 	LARGE_INTEGER m_Start;
