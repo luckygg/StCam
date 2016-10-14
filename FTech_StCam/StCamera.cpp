@@ -1045,7 +1045,7 @@ bool CStCamera::SetAcquisitionMode(CString strValue)
 	return true;
 }
 
-bool CStCamera::SetTriggerMode(CString strValue)
+bool CStCamera::SetTriggerMode(TRGMODE Mode)
 {
 	if (!m_pvDevice.IsConnected())
 	{
@@ -1055,7 +1055,13 @@ bool CStCamera::SetTriggerMode(CString strValue)
 
 	PvResult StResult = PvResult::Code::NOT_CONNECTED;
 
-	PvString value(strValue);
+	PvString value="";
+	switch (Mode)
+	{
+		case TRG_On	: value = "On"	; break;
+		case TRG_Off: value = "Off" ; break;
+	}
+
 	StResult = m_pvDevice.GetGenParameters()->SetEnumValue("TriggerMode", value);
 	if (!StResult.IsOK())
 	{
@@ -1066,7 +1072,7 @@ bool CStCamera::SetTriggerMode(CString strValue)
 	return true;
 }
 
-bool CStCamera::SetTriggerSource(CString strValue)
+bool CStCamera::SetTriggerSource(TRGSRC Src)
 {
 	if (!m_pvDevice.IsConnected())
 	{
@@ -1076,7 +1082,13 @@ bool CStCamera::SetTriggerSource(CString strValue)
 
 	PvResult StResult = PvResult::Code::NOT_CONNECTED;
 
-	PvString value(strValue);
+	PvString value="";
+	switch (Src)
+	{
+		case SRC_SW : value = "Software"; break;
+		case SRC_HW : value = "Hardware"; break;
+	}
+
 	StResult = m_pvDevice.GetGenParameters()->SetEnumValue("TriggerSource", value);
 	if (!StResult.IsOK())
 	{
@@ -1087,7 +1099,7 @@ bool CStCamera::SetTriggerSource(CString strValue)
 	return true;
 }
 
-bool CStCamera::SetTriggerOverlap(CString strValue)
+bool CStCamera::SetTriggerOverlap(TRGOVL Ovl)
 {
 	if (!m_pvDevice.IsConnected())
 	{
@@ -1097,7 +1109,14 @@ bool CStCamera::SetTriggerOverlap(CString strValue)
 
 	PvResult StResult = PvResult::Code::NOT_CONNECTED;
 
-	PvString value(strValue);
+	PvString value="";
+	switch (Ovl)
+	{
+		case OVL_Off	: value = "Off"			 ; break;
+		case OVL_ReadOut: value = "ReadOut"		 ; break;
+		case OVL_PreFrm	: value = "PreviousFrame"; break;
+	}
+
 	StResult = m_pvDevice.GetGenParameters()->SetEnumValue("TriggerOverlap", value);
 	if (!StResult.IsOK())
 	{
@@ -1108,7 +1127,7 @@ bool CStCamera::SetTriggerOverlap(CString strValue)
 	return true;
 }
 
-bool CStCamera::SetExposureMode(CString strValue)
+bool CStCamera::SetExposureMode(EXPMODE Mode)
 {
 	if (!m_pvDevice.IsConnected())
 	{
@@ -1118,7 +1137,13 @@ bool CStCamera::SetExposureMode(CString strValue)
 
 	PvResult StResult = PvResult::Code::NOT_CONNECTED;
 
-	PvString value(strValue);
+	PvString value="";
+	switch (Mode)
+	{
+		case EXP_Timed	: value = "Timed"		; break;
+		case EXP_PWC	: value = "TriggerWidth"; break;
+	}
+
 	StResult = m_pvDevice.GetGenParameters()->SetEnumValue("ExposureMode", value);
 	if (!StResult.IsOK())
 	{

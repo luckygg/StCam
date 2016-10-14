@@ -23,8 +23,14 @@
 #include <PvDevice.h>
 #include <PvAcquisitionStateManager.h>
 
+//----- enum type -----//
 enum AWB {AWB_Off=0, AWB_Preset1, AWB_Preset2, AWB_Preset3, AWB_Continuous, AWB_Once};
 enum USER {USER_Default=0, USER_UserSet1};
+enum TRGMODE {TRG_On=0, TRG_Off};
+enum TRGSRC {SRC_SW=0, SRC_HW};
+enum TRGOVL {OVL_Off=0, OVL_ReadOut, OVL_PreFrm};
+enum EXPMODE {EXP_Timed=0, EXP_PWC};
+
 class CStCamera
 {
 public:
@@ -90,10 +96,10 @@ public:
 	bool SetOffsetY(int nValue);							// Offset Y 설정.
 	bool SetAcquisitionFrameRate(double dValue);			// Frame Rate 설정.
 	bool SetAcquisitionMode(CString strValue);				// Acquistiion Mode 설정.
-	bool SetTriggerMode(CString strValue);					// Trigger Mode 설정.
-	bool SetTriggerSource(CString strValue);				// Trigger Source 설정.
-	bool SetTriggerOverlap(CString strValue);				// Trigger Overlap 설정.
-	bool SetExposureMode(CString strValue);					// Exposure Mode 설정.
+	bool SetTriggerMode(TRGMODE Mode);						// Trigger Mode 설정.
+	bool SetTriggerSource(TRGSRC Src);						// Trigger Source 설정.
+	bool SetTriggerOverlap(TRGOVL Ovl);						// Trigger Overlap 설정.
+	bool SetExposureMode(EXPMODE Mode);						// Exposure Mode 설정.
 	bool SetExposureTime(double dValue);					// Exposure Time 설정.
 	bool SetUserSetSelector(USER User);						// UserSetSelector 설정.
 	
