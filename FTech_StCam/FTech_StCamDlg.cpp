@@ -206,10 +206,13 @@ void CFTech_StCamDlg::CreateBmpInfo(int nWidth, int nHeight, int nBpp)
 
 void CFTech_StCamDlg::CallbackFunc()
 {
-	Sleep(30);
-
-	memcpy(m_pBuffer, m_StCamera.GetImageBuffer(), m_nWidth*m_nHeight*m_nBpp/8);
-	OnDisplay(m_pBuffer);
+	DWORD dwResult=0;
+	dwResult = WaitForSingleObject(m_StCamera.GetHandleGrabDone(), 100);
+	if (dwResult == WAIT_OBJECT_0)
+	{
+		memcpy(m_pBuffer, m_StCamera.GetImageBuffer(), m_nWidth*m_nHeight*m_nBpp/8);
+		OnDisplay(m_pBuffer);
+	}
 }
 
 void CFTech_StCamDlg::OnDisplay(BYTE* pBuffer)

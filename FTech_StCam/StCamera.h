@@ -1,11 +1,11 @@
 #pragma once
 
 //----------------------------------------------------------
-// CGraphEx Control
+// Sentech GigE Camera Class
 //----------------------------------------------------------
 // Programmed by William Kim
 //----------------------------------------------------------
-// Last Update : 2016-10-14 13:32
+// Last Update : 2016-11-10 16:37
 // Modified by William Kim
 //----------------------------------------------------------
 
@@ -88,7 +88,7 @@ public:
 	int  GetBPP()	 { return m_nBpp;	 }					// Image Bit per Pixel 반환.
 	double GetGrabTime() { return m_dTime; }				// Grab Tact Time 반환.
 	BYTE* GetImageBuffer() { return m_pbyBuffer; }			// Buffer 반환.
-	CString GetLastErrorMessage();							// 마지막 에러 메시지 반환.
+	CString GetLastErrorMessage() { return m_strErrorMsg; }	// 마지막 에러 메시지 반환.
 
 	//----- 설정 함수 -----//
 	bool SetDeviceUserID(CString strValue);					// Device User ID 설정.
@@ -103,6 +103,7 @@ public:
 	bool SetExposureTime(double dValue);					// Exposure Time 설정.
 	bool SetUserSetSelector(USER User);						// UserSetSelector 설정.
 	
+	HANDLE GetHandleGrabDone() { return m_hGrabDone; }
 
 protected:
 	LARGE_INTEGER m_Start;
